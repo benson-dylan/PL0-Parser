@@ -162,7 +162,7 @@ expr : term | expr plussym term | expr minussym term;
 
 term: factor | term multsym factor | term divsym factor;
 
-factor : identsym { $$ = ast_expr_ident($1); } | minussym numbersym {ast_expr_negated_number($1, $2); } | posSign numbersym { ast_expr_pos_number($1, $2); } | "(" expr ")";
+factor : identsym { $$ = ast_expr_ident($1); } | posSign numbersym {$$ = ast_expr_pos_number($1, $2); } | minussym numbersym { $$ = ast_expr_negated_number($1, $2); } | "(" expr ")";
 
 posSign : plussym | empty;
 
