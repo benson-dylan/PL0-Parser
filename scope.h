@@ -7,19 +7,19 @@ typedef struct ident_map {
     id_attrs *attrs; 
 } ident_map;
 
-typedef struct node {
+typedef struct scope_node {
     struct ident_map pair;
-    struct node *next;
-} node;
+    struct scope_node *next;
+} scope_node;
 
-// Return a pointer to a new node given an ident name and its attributes.
-extern node *create_node(char *name, id_attrs *attrs);
+// Return a pointer to a new scope_node given an ident name and its attributes.
+extern scope_node *create_scope_node(char *name, id_attrs *attrs);
 
 // Insert a new node at the tail and return the head. 
-extern node *append_node(node *head, char *name, id_attrs *attrs);
+extern scope_node *append_scope_node(scope_node *head, char *name, id_attrs *attrs);
 
 // Perform a linear search for a node with the given ident name. 
 // Returns NULL if node is not found. 
-extern node *find_node(node *head, char *name);
+extern scope_node *find_scope_node(scope_node *head, char *name);
 
 #endif
