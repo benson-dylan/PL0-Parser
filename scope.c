@@ -47,3 +47,15 @@ extern scope_node *find_scope_node(scope_node *head, char *name)
     }
     return NULL; 
 }
+// Free all nodes in the scope data structure
+extern void scope_destroy(scope_node *head)
+{
+    scope_node *iterator = head;
+    while(iterator != NULL)
+    {
+        scope_node *temp = iterator;
+        iterator = iterator->next;
+        free(temp->pair.attrs);
+        free(temp);
+    }
+}

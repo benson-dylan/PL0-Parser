@@ -22,4 +22,7 @@ extern scope_node *append_scope_node(scope_node *head, char *name, id_attrs *att
 // Returns NULL if node is not found. 
 extern scope_node *find_scope_node(scope_node *head, char *name);
 
+// Free all nodes in the scope data structure
+extern void scope_destroy(scope_node *head);
+
 #endif
