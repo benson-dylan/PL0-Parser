@@ -2,13 +2,9 @@
 #define _SCOPE_H
 #include "id_attrs.h"
 
-typedef struct ident_map {
+typedef struct scope_node {
     char *name;
     id_attrs *attrs; 
-} ident_map;
-
-typedef struct scope_node {
-    struct ident_map pair;
     struct scope_node *next;
 } scope_node;
 

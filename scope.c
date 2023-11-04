@@ -10,10 +10,8 @@ extern scope_node *create_scope_node(char *name, id_attrs *attrs)
     if (ret == NULL)
         bail_with_error("scope_node creation failed in scope module!");
 
-    ident_map new_map;
-    new_map.name = name;
-    new_map.attrs = attrs;
-    ret->pair = new_map;
+    ret->name = name;
+    ret->attrs = attrs;
     ret->next = NULL;
 
     return ret;
@@ -41,7 +39,7 @@ extern scope_node *find_scope_node(scope_node *head, char *name)
     scope_node *iterator = head;
     while(iterator != NULL)
     {
-        if(strcmp(name, iterator->pair.name) == 0)
+        if(strcmp(name, iterator->name) == 0)
             return iterator;
         iterator = iterator->next;
     }
@@ -55,7 +53,7 @@ extern void scope_destroy(scope_node *head)
     {
         scope_node *temp = iterator;
         iterator = iterator->next;
-        free(temp->pair.attrs);
+        free(temp->attrs);
         free(temp);
     }
 }
