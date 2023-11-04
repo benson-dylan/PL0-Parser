@@ -17,19 +17,16 @@ extern scope_node *create_scope_node(char *name, id_attrs *attrs)
     return ret;
 }
 
-// Insert a new node at the tail and return the head. 
+// Insert a new node at head. 
 extern scope_node *append_scope_node(scope_node *head, char *name, id_attrs *attrs)
 {
     // Create first node if list is empty
     if (head == NULL)
         return create_scope_node(name, attrs);
 
-    scope_node *iterator = head;
-    while (iterator->next != NULL)
-        iterator = iterator->next;
-
-    iterator->next = create_scope_node(name, attrs);
-    return head;
+    scope_node *new_head = create_scope_node(name, attrs);
+    new_head->next = head;
+    return new_head;
 }
 
 // Perform a linear search for a node with the given ident name. 

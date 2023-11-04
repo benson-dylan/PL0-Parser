@@ -1,6 +1,8 @@
 #ifndef _SYMTAB_H
 #define _SYMTAB_H
+#include <stdbool.h>
 #include "scope.h"
+#include "id_use.h"
 
 #define MAX_NESTING 100;
 

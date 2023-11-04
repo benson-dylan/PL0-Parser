@@ -11,7 +11,7 @@ typedef struct scope_node {
 // Return a pointer to a new scope_node given an ident name and its attributes.
 extern scope_node *create_scope_node(char *name, id_attrs *attrs);
 
-// Insert a new node at the tail and return the head. 
+// Insert a new node at head.
 extern scope_node *append_scope_node(scope_node *head, char *name, id_attrs *attrs);
 
 // Perform a linear search for a node with the given ident name. 
