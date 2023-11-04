@@ -20,10 +20,6 @@ extern scope_node *create_scope_node(char *name, id_attrs *attrs)
 // Insert a new node at head. 
 extern scope_node *append_scope_node(scope_node *head, char *name, id_attrs *attrs)
 {
-    // Create first node if list is empty
-    if (head == NULL)
-        return create_scope_node(name, attrs);
-
     scope_node *new_head = create_scope_node(name, attrs);
     new_head->next = head;
     return new_head;

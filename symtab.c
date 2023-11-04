@@ -30,6 +30,7 @@ extern bool symtab_full()
 {
     return size >= MAX_NESTING;
 }
+
 // Return a pointer to a new, empty stack node
 extern stack_node *create_stack_node()
 {
@@ -42,15 +43,69 @@ extern stack_node *create_stack_node()
     return ret;
 }
 
-// Push new scope to the top of the stack
-extern void symtab_enter_scope(stack_node *new_scope)
+extern unsigned int symtab_size()
 {
-    if (symtab_empty())
+    return size;
+}
+
+extern unsigned int symtab_scope_loc_count()
+{
+    unsigned int res = 0;
+    
+    scope_node *iterator = symtab.head;
+    while (iterator != NULL)
     {
-        symtab = create_stack_node();
-        size++;
-        return;
+        res++;
+        iterator = iterator->next;
     }
+    
+    return res;
+}
+
+extern bool symtab_declared(const char *name)
+{
+    stack_node *curr_scope = symtab;
+    while (curr_scope != NULL)
+    {
+        scope_node *curr = symtab->head;
+        while (curr != NULL)
+        {
+            if (strcmp(curr.name, name) == 0)
+                return true;
+            curr = curr.next;
+        }
+        curr_scope = curr_scope.next;
+    }
+
+    return false;
+}
+
+extern bool symtab_declared_in_current_scope(char* name)
+{
+    if (symtab == NULL | symtab->head == NULL)
+        return false;
+
+    scope_node *curr = symtab->head;
+    while (curr != NULL)
+    {
+        if (strcmp(curr.name, name) == 0)
+            return true;
+        curr = curr.next;
+    }
+    
+    return false;
+}
+
+extern void symtab_insert(const char *name, id_attrs *attrs)
+{
+    symtab.head = append_scope_node(symtab.head, name, attrs);
+}
+
+// Push new scope to the top of the stack
+extern void symtab_enter_scope()
+{
+    if (symtab_full())
+        bail_with_error("Max nesting of scopes exceeded in symtab module!");
 
     stack_node *new_scope = create_stack_node();
     new_scope->next = symtab;
@@ -58,7 +113,7 @@ extern void symtab_enter_scope(stack_node *new_scope)
     size++;
 }
 
-void symtab_leave_scope()
+extern void symtab_leave_scope()
 {
     if (symtab_empty())
         return;
@@ -70,32 +125,25 @@ void symtab_leave_scope()
     size--;
 }
 
-extern unsigned int symtab_size()
+extern id_use *symtab_lookup(const char *name)
 {
-    return size;
-}
+    unsigned int levelsOutward = 0;
 
-bool declared_in_current_scope(char* name)
-{
-    if (symtab == NULL | symtab->head == NULL)
-        return false;
-
-    scope_node *curr = symtab->head;
-
-    while (curr != NULL)
+    stack_node *curr_scope = symtab;
+    while (curr_scope != NULL)
     {
-        if (strcmp(curr.name, name) == 0)
-            return true;
-        else
+        scope_node *curr = symtab->head;
+        while (curr != NULL)
+        {
+            if (strcmp(curr.name, name) == 0)
+            {
+                return id_use_create(curr.attrs, levelsOutward);
+            }
             curr = curr.next;
+        }
+        curr_scope = curr_scope.next;
+        levelsOutward++;
     }
-    
-    return false;
-}
 
-extern void symtab_insert(const char *name, id_attrs *attrs)
-{
-    symtab.head = append_scope_node(symtab.head, name, attrs);
+    return NULL;
 }
-
- 

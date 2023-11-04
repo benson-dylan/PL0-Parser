@@ -21,14 +21,6 @@ extern bool symtab_full();
 // Return a pointer to a new, empty stack node
 extern stack_node *create_stack_node();
 
-// Push new scope to the top of the stack
-// Requires: !symtab_full()
-extern void symtab_enter_scope(stack_node *new_scope);
-
-// Pop scope at top of stack and destroy it
-// Requires: !symtab_empty()
-extern void symtab_leave_scope();
-
 // Return the number of scopes
 // currently in the symbol table.
 extern unsigned int symtab_size();
@@ -40,14 +32,6 @@ extern unsigned int symtab_scope_loc_count();
 // Return the current scope's size
 // (the number of declared ids).
 // extern unsigned int symtab_scope_size();
-
-// Is the current scope full?
-extern bool symtab_scope_full();
-
-// Return the current nesting level 
-// (num. of symtab_enter_scope() calls
-//  - num. of symtab_leave_scope() calls
-extern unsigned int symtab_current_nesting_level();
 
 // Is name declared?
 // (this looks back through all scopes)
@@ -62,6 +46,14 @@ extern bool symtab_declared_in_current_scope(const char *name);
 // Add an association from the given name
 // to the given attributes
 extern void symtab_insert(const char *name, id_attrs *attrs);
+
+// Push new scope to the top of the stack
+// Requires: !symtab_full()
+extern void symtab_enter_scope();
+
+// Pop scope at top of stack and destroy it
+// Requires: !symtab_empty()
+extern void symtab_leave_scope();
 
 // If name is declared, return
 // an id_use pointer for it, otherwise
