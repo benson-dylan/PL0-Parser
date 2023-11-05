@@ -30,4 +30,24 @@ extern void scope_check_idents(idents_t ids, id_kind vt);
 // reporting if it's a duplicate declaration
 extern void scope_check_declare_ident(ident_t *id, id_kind vt);
 
+extern void scope_check_stmts(stmt_t stmt);
+
+extern void scope_check_stmt(stmt_t stmt);
+
+extern void scope_check_assignStmt(assign_stmt_t stmt);
+
+extern void scope_check_callStmt(call_stmt_t stmt);
+
+extern void scope_check_beginStmt(begin_stmt_t stmt);
+
+extern void scope_check_ifStmt(if_stmt_t stmt);
+
+extern void scope_check_whileStmt(while_stmt_t stmt);
+
+extern void scope_check_readStmt(read_stmt_t stmt);
+
+extern void scope_check_writeStmt(write_stmt_t stmt);
+
+extern void scope_check_skipStmt(skip_stmt_t stmt);
+
 #endif 
