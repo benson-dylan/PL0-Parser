@@ -125,14 +125,14 @@ extern void symtab_leave_scope()
     size--;
 }
 
-extern id_use *symtab_lookup( const char *name)
+extern id_use *symtab_lookup(const char *name)
 {
     unsigned int levelsOutward = 0;
 
     stack_node *curr_scope = symtab;
     while (curr_scope != NULL)
     {
-        scope_node *curr = symtab->head;
+        scope_node *curr = curr_scope->head;
         while (curr != NULL)
         {
             if (strcmp(curr->name, name) == 0)

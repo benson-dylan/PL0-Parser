@@ -30,9 +30,21 @@ extern void scope_check_idents(idents_t ids, id_kind vt);
 // reporting if it's a duplicate declaration
 extern void scope_check_declare_ident(ident_t *id, id_kind vt);
 
+extern id_use *scope_check_ident_declared(file_location floc, const char *name);
+
+extern void scope_check_procDecls(proc_decls_t pd);
+
+extern void scope_check_procDecl(proc_decl_t pd);
+
+extern void scope_check_declare_proc(proc_decl_t *pd);
+
 extern void scope_check_stmts(stmt_t stmt);
 
 extern void scope_check_stmt(stmt_t stmt);
+
+extern void scope_check_expr(expr_t expr);
+
+extern void scope_check_condition(condition_t cond);
 
 extern void scope_check_assignStmt(assign_stmt_t stmt);
 
@@ -47,7 +59,5 @@ extern void scope_check_whileStmt(while_stmt_t stmt);
 extern void scope_check_readStmt(read_stmt_t stmt);
 
 extern void scope_check_writeStmt(write_stmt_t stmt);
-
-extern void scope_check_skipStmt(skip_stmt_t stmt);
 
 #endif 
