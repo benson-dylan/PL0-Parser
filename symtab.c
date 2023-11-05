@@ -52,7 +52,7 @@ extern unsigned int symtab_scope_loc_count()
 {
     unsigned int res = 0;
     
-    scope_node *iterator = symtab.head;
+    scope_node *iterator = symtab->head;
     while (iterator != NULL)
     {
         res++;
@@ -70,17 +70,17 @@ extern bool symtab_declared(const char *name)
         scope_node *curr = symtab->head;
         while (curr != NULL)
         {
-            if (strcmp(curr.name, name) == 0)
+            if (strcmp(curr->name, name) == 0)
                 return true;
-            curr = curr.next;
+            curr = curr->next;
         }
-        curr_scope = curr_scope.next;
+        curr_scope = curr_scope->next;
     }
 
     return false;
 }
 
-extern bool symtab_declared_in_current_scope(char* name)
+extern bool symtab_declared_in_current_scope(const char *name)
 {
     if (symtab == NULL | symtab->head == NULL)
         return false;
@@ -88,9 +88,9 @@ extern bool symtab_declared_in_current_scope(char* name)
     scope_node *curr = symtab->head;
     while (curr != NULL)
     {
-        if (strcmp(curr.name, name) == 0)
+        if (strcmp(curr->name, name) == 0)
             return true;
-        curr = curr.next;
+        curr = curr->next;
     }
     
     return false;
@@ -98,7 +98,7 @@ extern bool symtab_declared_in_current_scope(char* name)
 
 extern void symtab_insert(const char *name, id_attrs *attrs)
 {
-    symtab.head = append_scope_node(symtab.head, name, attrs);
+    symtab->head = append_scope_node(symtab->head, name, attrs);
 }
 
 // Push new scope to the top of the stack
@@ -125,7 +125,7 @@ extern void symtab_leave_scope()
     size--;
 }
 
-extern id_use *symtab_lookup(const char *name)
+extern id_use *symtab_lookup( const char *name)
 {
     unsigned int levelsOutward = 0;
 
@@ -135,13 +135,13 @@ extern id_use *symtab_lookup(const char *name)
         scope_node *curr = symtab->head;
         while (curr != NULL)
         {
-            if (strcmp(curr.name, name) == 0)
+            if (strcmp(curr->name, name) == 0)
             {
-                return id_use_create(curr.attrs, levelsOutward);
+                return id_use_create(curr->attrs, levelsOutward);
             }
-            curr = curr.next;
+            curr = curr->next;
         }
-        curr_scope = curr_scope.next;
+        curr_scope = curr_scope->next;
         levelsOutward++;
     }
 

@@ -4,7 +4,7 @@
 #include "scope.h"
 
 // Return a pointer to a new scope_node given an ident name and its attributes.
-extern scope_node *create_scope_node(char *name, id_attrs *attrs)
+extern scope_node *create_scope_node(const char *name, id_attrs *attrs)
 {
     scope_node *ret = (scope_node *)malloc(sizeof(scope_node));
     if (ret == NULL)
@@ -18,7 +18,7 @@ extern scope_node *create_scope_node(char *name, id_attrs *attrs)
 }
 
 // Insert a new node at head. 
-extern scope_node *append_scope_node(scope_node *head, char *name, id_attrs *attrs)
+extern scope_node *append_scope_node(scope_node *head, const char *name, id_attrs *attrs)
 {
     scope_node *new_head = create_scope_node(name, attrs);
     new_head->next = head;
@@ -27,7 +27,7 @@ extern scope_node *append_scope_node(scope_node *head, char *name, id_attrs *att
 
 // Perform a linear search for a node with the given ident name. 
 // Returns NULL if node is not found. 
-extern scope_node *find_scope_node(scope_node *head, char *name)
+extern scope_node *find_scope_node(scope_node *head, const char *name)
 {
     scope_node *iterator = head;
     while(iterator != NULL)
